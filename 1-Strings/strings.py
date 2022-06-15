@@ -277,5 +277,11 @@ def func23():
     print(help(str.lower))  # Prints "lower(self, /)      return a copy of the string converted to lowercase. "
 
 
+def func24(): 
+    # REMEMBER: If you want the print function to not create a new line after each time it prints, you can do the following
+    print("Example text", end="") # This makes it that the print function doesn't do anything after it prints
+    print("Hey Vsauce ", end="Michael \t here!") 
+
+
 #type the name of the function that you want to run below
-func4()
+func24()
