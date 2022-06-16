@@ -1,6 +1,13 @@
 # Strings are ordered and immutable data collection type used for text representation
 from timeit import default_timer as timer
 
+# These are single line comments
+"""
+These are docstrings 
+    Python doesn't have multi-line comment but we can use multi-line strings instead 
+    (multiline strings are reviewed later in this file)
+"""
+
 def func1(): 
     myString = "This is a string" # A string can be created from either single ('') or double ("") quotes
     print(myString)
