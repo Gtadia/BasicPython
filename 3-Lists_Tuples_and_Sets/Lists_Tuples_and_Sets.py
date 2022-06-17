@@ -32,7 +32,7 @@ def func4():
 
 def func5():
     # You can get the values from multiple indices
-    # list[start (inclusive): end (exclusive): jump]
+    # list[start (inclusive): end (exclusive): step]
     courses = ["Chemistry", "Economics", "Calculus", "Computer Science", "Literature", "Spanish"]
     print(courses[0:2]) # Prints out Chemistry, & Economics
     print(courses[1:6:2]) # Prints out Economics, Computer Science, and Spanish

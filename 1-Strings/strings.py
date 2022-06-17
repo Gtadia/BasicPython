@@ -1,5 +1,4 @@
 # Strings are ordered and immutable data collection type used for text representation
-from timeit import default_timer as timer
 
 # These are single line comments
 """
@@ -202,6 +201,7 @@ def func19():
 
 
 def func20():
+    from timeit import default_timer as timer
     # Example of using a string "multiplier" and converting it into a string
     myList = ['a'] * 1000000
     # Bad code
