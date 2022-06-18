@@ -69,6 +69,7 @@ def func2():
     color = Color_Tuple(55, 155, 255) # After we named our tuple, we give the nametuple data to store 
     """ color = Color_Tuple(red=55, green=155, blue=255) """ # If you wanted, you can be really specific with your values
     color_2 = Color_Tuple(red=86, green=203, blue=100) # Unlike dictionaries, you can create new colors really quickly 
+    color_3 = Color_Tuple._make([23, 100, 93]) # Another way to make a namedtuple "object"
 
     print(color[0]) # We can get the values returned back like a normal tuple
     print(color.red) # Or we can get the values returned using the name we gave our values
@@ -77,6 +78,5 @@ def func2():
     print(new_color_2)
 
 
-
-
+# type the name of the function that you want to run here
 func2()
