@@ -9,7 +9,7 @@ In order to use a namedtuple, you have to import it from collections:
 
 
 * Extra Info (From Comment Section)
-namedtuple returns a class (that's a child of the built-in class tuple). 
+    namedtuple returns a class (that's a child of the built-in class tuple). 
     The first argument you pass to namedtuple becomes the name of the class, 
     while the list of strings becomes the attributes (data fields). You can 
     then call the constructor (the line of code before the print() method in 
@@ -21,6 +21,17 @@ namedtuple returns a class (that's a child of the built-in class tuple).
     > To support pickling, the named tuple class should be assigned to a 
     variable that matches typename.
     Pickling is Python's name for its built-in method of serializing an object
+
+
+IN OTHER WORDS:
+    The namedtuple from the collection module is a class factory. In other words, it manufactures classes. 
+    We need to provide the following things to produce the class we want.
+
+    The class name we want to use
+    A sequence of field names we want to assign, in the order of elements in the tuple.
+    We need to assign that class to a variable name in our code so we can use it to construct instances.
+
+"https://towardsdatascience.com/python-named-tuple-what-how-and-when-to-use-4718b0668afd"
 """
 
 def func1():
@@ -69,7 +80,7 @@ def func2():
     color = Color_Tuple(55, 155, 255) # After we named our tuple, we give the nametuple data to store 
     """ color = Color_Tuple(red=55, green=155, blue=255) """ # If you wanted, you can be really specific with your values
     color_2 = Color_Tuple(red=86, green=203, blue=100) # Unlike dictionaries, you can create new colors really quickly 
-    color_3 = Color_Tuple._make([23, 100, 93]) # Another way to make a namedtuple "object"
+    color_3 = Color_Tuple._make([23, 100, 93]) # Another way to make a namedtuple "object" (the list inside of ",_make" can be a tuple, just make sure that it has the same number of values as the namedtuple)
 
     print(color[0]) # We can get the values returned back like a normal tuple
     print(color.red) # Or we can get the values returned using the name we gave our values
