@@ -112,7 +112,7 @@ def func6():
             self.pay = pay
             self.email = f"{self.first[0]}{last_name}@email.com"
 
-        def fullname():
+        def fullname(self):
             return f"{self.first} {self.last}"
 
     instance_of_the_employee_class = Employee("Mark", "Zuckerberg", 99999999999)
@@ -120,5 +120,5 @@ def func6():
     print(instance_of_the_employee_class.fullname()) # This is the same as...
     print(Employee.fullname(instance_of_the_employee_class)) # This
 
-
-func5()
+# type the name of the function that you want to run here
+func6()
