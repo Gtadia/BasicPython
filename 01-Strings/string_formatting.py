@@ -4,6 +4,9 @@ https://youtu.be/vTX3IwquFkc
 String Formatting
 """
 
+from audioop import tomono
+
+
 def func1():
     # Simple string formatting in Python
     sentence = "My name is {} and I am {} years old.".format("Max", 12) # "{}" are "placeholders" in Python
@@ -89,5 +92,43 @@ def func10():
     print(sentence)
 
 
+def func11():
+    # With Python version 3.6 or higher, you have access to fstrings, which is a simplier way to format strings
+    first_name = "Tom"
+    last_name = "Jerry"
+    
+    sentence = f"My name is {first_name} {last_name}" # In order to create an fstring, just include the f in front of the string
+    print(sentence)
+
+
+def func12():
+    # We can run functions or methods directly within the fstrings
+    first_name = "Tom"
+    last_name = "Jerry"
+    
+    sentence = f"My name is {first_name.upper()} {last_name.upper()}"
+    print(sentence)
+
+
+def func13():
+    # REMEMBER: Make sure your qutoes don't terminate your string too early
+    person = {"name": "Bob", "Occupation": "Builder"}
+
+    sentence = f"My name is {person['name']} and I am a {person['occupation']}." # With dictionaries, when you're calling the key, don't let the quotes mix (use double quotes for the string and single quotes for the keyword or vise versa)
+    print(sentence)
+
+
+def func14():
+    # Inside a fstring placeholder, we can do calculations
+    print(f"5 * 6 = {5 * 6}")
+
+
+def func15():
+    # We can also format fstrings like .format()
+    for n in range(0, 200, 10):
+        sentence = f"The current value is {n:03}" # zero padding the numbers up to 3 digits
+        print(sentence)
+
+
 # type the name of the function that you want to run here
-func10()
+func15()
