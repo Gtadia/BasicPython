@@ -65,7 +65,7 @@ def func4():
             self.pay = pay
             self.email = f"{self.first[0]}{last_name}@email.com" # You can either get the value saved in the instance or thought the parameter
 
-    employee_1 = Employee("first-name", "last-name", 50000) # we don't need to pass in the class instance ("self")/object because it's passed automatically 
+    employee_1 = Employee("first-name", "last-name", 50000) # we don't need to pass in the class instance ("self")/object because it's passed automatically/the __init__ method is implicitly called when we create the Employee object
     employee_2 = Employee("Tiffany", "Underarmor", 12345)
 
     # You can see that the first_name attribute is different for the two objects
