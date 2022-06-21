@@ -203,6 +203,35 @@ def func24():
 
 
 def func25():
+    # You can make a TRUE copy of a list that is independent from the original list
+    list_original = ["banana", "cherry", "apple"]
+    list_copy = list_original.copy() # Makes a copy of "list_original"
+    list_copy.append("lemon")
+    print(list_copy)
+    print(list_original)
+
+
+def func26():
+    # ANOTHER way to make a TRUE copy of a list that is independent from the original list
+    list_original = ["banana", "cherry", "apple"]
+    list_copy = list_original[:]
+    list_copy.append("lemon")
+    print(list_copy)
+    print(list_original)
+
+
+def func27():
+    # QUICKLY modifying the contents of a list
+    a = [1, 2, 3, 4, 5, 6]
+    b = [i*i for i in a]
+    c = [(x+x)*x for x in b]
+    # list_name = [<expression> for <new_variable_that_you_can_create_in_this_spot> in <original_list_name>]
+    print(a)
+    print(b)
+    print(c)
+
+
+def func28():
     # However, unlike lists, TUPLES are IMMUTABLE, meaning that you cannot change its elements
     # For example: 
     example_tuples = ("Airplanes", "Stay", "In", "The", "Air", "Most", "Of", "The", "Time") # Notice how you can create a tuples using parentheses instead of square brackets like lists
@@ -212,34 +241,34 @@ def func25():
     # Because tuples are immutable, it can't append/insert, remove/pop elements, or sort (sorted works though because it doesn't change the original tuple). Other than that, tuples and lists nearly behave the same
 
 
-def func26():
+def func29():
     # Sets are unordered and doesn't store any duplicate values
     example_sets = {"The", "The", "Dopest", "Thing", "About", "Horses", "Horses", "Is", "That", "They're", "Basically", "Grass", "Engines"}
     print(example_sets)
 
 
-def func27():
+def func30():
     # We can see if two sets have any variables in common (Using ".intersection()")
     sets_1 = {"seven", "ate", "nine"}
     sets_2 = {"seven", "didn't", "eat", "nine"}
     print(sets_1.intersection(sets_2)) # Returns {"seven", "nine"} because that's what they have in common
 
 
-def func28(): 
+def func31(): 
     # If you wanted to know what elements were in sets_1 but not in sets_2, then we can use the ".difference()" method
     sets_1 = {"seven", "ate", "nine"}
     sets_2 = {"seven", "didn't", "eat", "nine"}
     print(sets_1.difference(sets_2)) # Returns {"ate"}
 
 
-def func29(): 
+def func32(): 
     # if you wanted to combine two sets, you can use the ".union()" method
     sets_1 = {"seven", "ate", "nine"}
     sets_2 = {"seven", "didn't", "eat", "nine"}
     print(sets_1.union(sets_2))
 
 
-def func30(): 
+def func33(): 
     # How to create empty lists, tuples, and sets
 
     # Empty Lists

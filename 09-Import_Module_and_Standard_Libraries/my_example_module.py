@@ -1,7 +1,6 @@
 """
 Example Module
 """
-
 print("Imported my_example_module...")
 
 test = "Test String"
