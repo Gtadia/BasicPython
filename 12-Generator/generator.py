@@ -115,3 +115,7 @@ def func6():
 
     Lists, on the other hand, will compute and store everything in the list and therefore takes a longer to execute.
     """
+
+
+# Type the name of the function that you want to run
+func6()

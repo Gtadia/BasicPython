@@ -5,6 +5,8 @@ First-Class Functions:
 "A programming language is said to have first-class functions if it treats functions as first-class citizens."
 In other words, it allows us to treat functions like any other object.
 
+    For example, we can pass functions as arguments as arguments to another function, we can return functions, and we can assign functions as variables.
+
 First-Class Citizen (Programming):
 "A first-class citizen (sometimes called first-class objects) in a programming language is an entity which supports all the operations generally available to other
 entities. These operations typically include being passed as an argument, returned from a function, and assigned to a variable."
@@ -17,8 +19,6 @@ def func1():
     """
     The code below is how we are used to doing with functions
     """
-
-
     def square(x):
         return x * x
 
@@ -72,6 +72,8 @@ def func3():
     # Just another example using the custom map function ('my_map') with a new function passed in
     print(my_map(cube, [1, 2, 3, 4, 5]))
 
+
+def func4():
     # Returning a function from another function
     def logger(myMessage):
 
@@ -84,7 +86,7 @@ def func3():
     log_hi() # The reason why we don't pass the value "Hi!" into the parameters is because 'log_hi' remembered our initial message that we passed into it. This behavior is what we call a "closure"
 
 
-def func4():
+def func5():
     """
     An example code to show why we would ever need to return a function in a function 
 
@@ -107,3 +109,8 @@ def func4():
 
     print_p = html_tag("p")
     print_p("Test Paragraph!")
+
+
+
+# Type the name of the function that you want to run
+func6()
