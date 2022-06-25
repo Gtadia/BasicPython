@@ -41,7 +41,7 @@ def func7():
     # Example of using the standard libraries
     from datetime import datetime
 
-    os.chdir('../BasicPython/9-Import_Module_and_Standard_Libraries')
+    os.chdir('../BasicPython/9-Import_Module_and_Standard_Libraries') # chdir = change directory
     date_file_was_modified = os.stat("rename_me.txt").st_mtime
     print(datetime.fromtimestamp(date_file_was_modified))    
 
