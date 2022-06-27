@@ -24,6 +24,7 @@ Another example of I/O Bound tasks are reading and writing from the file system 
 When we are threading, we are going to see benefits when our tasks are I/O bound.
 
 We would want to use mutliprocessing to run CPU Bound tasks so that these computationally hard tasks run in parallel of each other in order to get computing time benefits.
+(We wouldn't get much of a benefit running CPU Bound tasks with threading because those tasks are still bound to a single thread)
 (If we try to use threads on CPU Bound tasks, we might actually slow the program down because creating and destroying the threads have some overhead (take up
 computational power).)
 """

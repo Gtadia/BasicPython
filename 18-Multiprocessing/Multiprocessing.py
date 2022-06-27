@@ -1,6 +1,9 @@
 """
+https://youtu.be/fKl2JW_qrso
+
 Multiprocessing:
-We want to use multiprocessing whenever it's going to significantly speed up our program. This speed up comes from different tasks running in parallel.
+We want to use multiprocessing whenever it's going to significantly speed up our program. This speed up comes from different tasks running in parallel on different
+CPU threads (therefore, CPU Bound tasks are a good candidate for seeing benefits with mutliprocessing).
 
 CPU Bound tasks:
 Tasks that are crunching a lot of numbers and using the CPU a lot. These types of tasks are the ones that you would want to use multiprocessing with. However, these
@@ -37,20 +40,41 @@ def func1():
     print(f"Finished in {round(finish - start, 2)} second(s)")
 
 
+
+"""FOR FUNCTIONS 2 THROUGH 5"""
+def do_something():
+    """
+    Strangely, the multiprocessing module is a little different from threading in that the "target=" can't seem to find the local inner local function. It has to
+    be outside of the outer function in order to be able to see it. This is why for functions 2 - 5, we're going to use this do_something function outside
+    of the outer functions.
+    """
+    import time
+    print("Sleeping 1 second...")
+    time.sleep(1)
+    print("Done Sleeping")
+"""FOR FUNCTIONS 2 THROUGH 5"""
+
+
+
 def func2():
     """
     The older way of doing mutliprocessing
 
     In order to first set multiprocessing, you need to set up 'multiprocessing.Process(target=<function name>)' first for the number of processes that you want. 
-    However, when you create the multiprocessor, you are not actually running the code. In order to run the code, you need to use the 'start' method for each process.
+    However, when you create the multiprocessor, you are not actually running the code. In order to run the code, you need to use the 'start' method for each 
+    process.
 
     1. "if __name__ == '__main__'
-    The reason why we need "if __name__ == '__main__':" is because we're importing the multiprocessing module and by using "if __name__ == '__main':" (which I'll be 
-    calling "The Code" from now on), we are avoiding the unintended side effects, such as starting a new process. A module that doesn't have it, when imported, runs as if it 
-    were being ran direclty. By including the "if" statement there, this will only allow the code within that "if" statement to run, if ran directly (such as running it 
-    yourself), whereas if you were to import a module that has an "if" statement, it "loads" it in a sense, since it's no longer referred to as "__main__". 
+    The reason why we need "if __name__ == '__main__':" is because we're importing the multiprocessing module and by using "if __name__ == '__main':" (which I'll 
+    be calling "The Code" from now on), we are avoiding the unintended side effects, such as starting a new process. A module that doesn't have it, when imported, 
+    runs as if it were being ran direclty. By including the "if" statement there, this will only allow the code within that "if" statement to run, if ran directly 
+    (such as running it yourself), whereas if you were to import a module that has an "if" statement, it "loads" it in a sense, since it's no longer referred to 
+    as "__main__". 
 
     If you ran it directly, it's "labelled" as "__main__". When imported, it's "labelled" as it's file name, more or less. 
+        EX:
+        If we run "Multiprocessing.py" directly, __name__ = "__main__".
+        If we import Multiprocessing.py" into a different file (for example, "Exmple_File.py"), __name__ = "Multiprocessing.py"
 
     Knowing this, a translation may help:
     If it's name is main, run this code. (In this case, it could result in a stray process)
@@ -63,13 +87,14 @@ def func2():
     
     start = time.perf_counter()
     
-    
-    def do_something():
+    """
+    def do_something():  # Normally, this function would work but because this function is inside of another function ("func2"), the "target=" can't seem to find it
         print("Sleeping 1 second...")
         time.sleep(1)
         print("Done Sleeping")
+    """
     
-    if __name__ == '__main__': # We need this line of code in order to run multiprocessing (Details in the multi_line comment above     Footnote 1)
+    if __name__ == '__main__': # We need this line of code in order to get the multiprocessing prepared to run (Details in the multi_line comment above)
         p1 = multiprocessing.Process(target=do_something) # the 'target' is the function that you want to run
         p2 = multiprocessing.Process(target=do_something)
     
@@ -77,8 +102,8 @@ def func2():
         p2.start()
     
     # You need to make sure you run the finish and print statement within "if __name__ == '__main__' for processes that are called will run the entire code and print
-    # out the print statement again (in other words, if you have anything in your code that you don't want to run in the threads, it has be to inside of the
-    "if __name__ == '__main__':"
+    # out the print statement again (in other words, if you have anything in your code that you don't want to run in the threads, it has be to inside of the "if __name__ == '__main__':"
+    
     finish = time.perf_counter()
     print(f"Finished in {round(finish - start, 2)} second(s)")
 
@@ -104,25 +129,26 @@ def func3():
     """
     import multiprocessing
     import time
-    
+
     start = time.perf_counter()
-    
-    
-    def do_something():
+
+    """
+    def do_something(): # Normally, this function would work but because this function is inside of another function ("func3"), the "target=" can't seem to find it
         print("Sleeping 1 second...")
         time.sleep(1)
         print("Done Sleeping")
-    
+    """
+
     if __name__ == '__main__':
         p1 = multiprocessing.Process(target=do_something)
         p2 = multiprocessing.Process(target=do_something)
-    
+
         p1.start()
         p2.start()
-    
+
         p1.join() # We're using 'join' in order to tell the code to wait until the processes are finished before moving on with the code.
         p2.join()
-    
+
     finish = time.perf_counter()
     print(f"Finished in {round(finish - start, 2)} second(s)")
 
@@ -137,20 +163,21 @@ def func4():
     """
     import multiprocessing
     import time
-    
+
     start = time.perf_counter()
-    
-    
-    def do_something():
+
+    """
+    def do_something(): # Normally, this function would work but because this function is inside of another function ("func4"), the "target=" can't seem to find it
         print("Sleeping 1 second...")
         time.sleep(1)
         print("Done Sleeping")
-    
+    """
+
     if __name__ == '__main__':
         for _ in range(10): # the range of 10 means we are going to have 10 different processes
             p = multiprocessing.Process(target=do_something)
             p.start()
-    
+
         finish = time.perf_counter()
         print(f"Finished in {round(finish - start, 2)} second(s)") # Footnote 1 (more detail in the multiline comment above
 
@@ -161,12 +188,12 @@ def func5():
     elements/processes.
 
     The reason why we can't just simply run the 'join' method on the within the original loop because it would run 'join' on the processes before the loop is able to 
-    loop through, create, and start the next process in the loop so it would basically be the same as running it synchronously. To combat this, we are appending the 
+    loop through, create, and start the next process in the loop so it would basically be the same as running it synchronously. To combat this, we can append the 
     processes to a list and then joining the processes in a loop because that way, we can start the start all of the processes in one loop and the loop through those 
     processes again and run the join method on them so that they all finish before the end of our script. 
 
     1. print(f"Finished in {round(finish - start, 2)} second(s)")
-    The reason why this program was still able to finish in around 1 second even though the computer doesn't have 10 different cores is because the computer has a way of 
+    The reason why this program was still able to finish in around 1 second even though the computer doesn't have 20 different cores is because the computer has a way of 
     switching off between cores when one of them isn't too busy. 
     """
     import multiprocessing
@@ -174,25 +201,37 @@ def func5():
     
     start = time.perf_counter()
     
-    
-    def do_something():
+    """
+    def do_something(): # Normally, this function would work but because this function is inside of another function ("func5"), the "target=" can't seem to find it
         print("Sleeping 1 second...")
         time.sleep(1)
         print("Done Sleeping")
-    
+    """
     
     processes = [] # We have created an empty list to append all of our processes to
-    if __name__ == '__main__':
-        for _ in range(10): # the range of 10 means we are going to have 10 different processes
+
+    if __name__ == "__main__":
+        for _ in range(20): # the range of 20 means we are going to have 20 different processes
             p = multiprocessing.Process(target=do_something)
             p.start()
             processes.append(p) # We have appended all of our processes into a list
-    
+
         for process in processes:
-            process.join()  # We are joining all the elements/processes inside of the list
-    
+            process.join()  # We are joining all the elements/processes inside of the list (going to wait until the process finishes before countinuing on to the rest of the script)
+
         finish = time.perf_counter()
         print(f"Finished in {round(finish - start, 2)} second(s)") # Footnote 1
+
+
+
+"""FOR FUNCTIONS 6"""
+def do_something(seconds): # We are taking in a parameter of "seconds"
+    import time
+    print(f"Sleeping {seconds} second(s)...")
+    time.sleep(seconds) # We are now going to sleep for "seconds" (the parameter value) number of seconds
+    print("Done Sleeping")
+"""FOR FUNCTIONS 6"""
+
 
 
 def func6():
@@ -213,11 +252,12 @@ def func6():
     
     start = time.perf_counter()
     
-    
-    def do_something(seconds): # We are taking in a parameter of "seconds"
+    """
+    def do_something(seconds): # Normally, this function would work but because this function is inside of another function ("func6"), the "target=" can't seem to find it
         print(f"Sleeping {seconds} second(s)...")
-        time.sleep(seconds) # We are now going to sleep for "seconds" (the parameter value) number of seconds
+        time.sleep(seconds) 
         print("Done Sleeping")
+    """
     
     if __name__ == '__main__':
         processes = [] # We can have the list inside or outside of "if __name__ == '__main__'
@@ -233,6 +273,16 @@ def func6():
         print(f"Finished in {round(finish - start, 2)} second(s)")
 
 
+"""FOR FUNCTIONS 7 THROUGH 11"""
+def do_something(seconds): # We are taking in a parameter of "seconds"
+    import time
+    print(f"Sleeping {seconds} second(s)...")
+    time.sleep(seconds) # We are now going to sleep for "seconds" (the parameter value) number of seconds
+    return("Done Sleeping") # Literally the only difference is between the last "do_something" function and this function is the last line of code is retruned, not printed
+"""FOR FUNCTIONS 7 THROUGH 11"""
+
+
+
 def func7():
     """
     The newer (and faster) way of multiprocessing
@@ -242,7 +292,6 @@ def func7():
     switch over to using multiple threads instead of processes as well, depending on the problem that we're trying to solve. 
 
     In order to use the ProcessP00lExecutor, we need to import it from the 'concurrent.futures' module instead of the 'multiprocessing' module
-
 
 
     1. f1 = executor.submit(do_something, 1)
@@ -259,12 +308,13 @@ def func7():
     
     start = time.perf_counter()
     
-    
-    def do_something(seconds):
+    """
+    def do_something(seconds): # Normally, this function would work but because this function is inside of another function ("func7"), the "target=" can't seem to find it
         print(f"Sleeping {seconds} second...")
         time.sleep(seconds)
         return "Done Sleeping" # We are going to return this string so that we can grab it when we call 'result' on the processes (ex. 'f1.result()')
-    
+    """
+
     if __name__ == '__main__':
         with concurrent.futures.ProcessPoolExecutor() as executor:
         #     We can use a couple of different methods that we can use within this statement
@@ -272,7 +322,7 @@ def func7():
             f2 = executor.submit(do_something, 1)
             # When you use 'result', the code will wait until the function completes.
             print(f1.result()) # We can grab the results using 'result' and it will give us the return value of the function (The result is "Done Sleeping").
-            print(f2.result())
+            print(f2.result()) # If instead of print, we had return, the return statement will wait until the .result() functions returns something.
     
         finish = time.perf_counter()
         print(f"Finished in {round(finish - start, 2)} second(s)")
@@ -298,11 +348,12 @@ def func8():
     
     start = time.perf_counter()
     
-    
-    def do_something(seconds):
+    """
+    def do_something(seconds): # Normally, this function would work but because this function is inside of another function ("func8"), the "target=" can't seem to find it
         print(f"Sleeping {seconds} second...")
         time.sleep(seconds)
         return("Done Sleeping")
+    """
     
     if __name__ == '__main__':
         with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -331,12 +382,12 @@ def func9():
     
     start = time.perf_counter()
     
-    
-    def do_something(seconds):
+    """
+    def do_something(seconds): # Normally, this function would work but because this function is inside of another function ("func9"), the "target=" can't seem to find it
         print(f"Sleeping {seconds} second...")
         time.sleep(seconds)
         return f"Done Sleeping {seconds}"
-    
+    """
     
     if __name__ == '__main__':
         with concurrent.futures.ProcessPoolExecutor() as executor:
@@ -388,11 +439,12 @@ def func10():
     
     start = time.perf_counter()
     
-    
-    def do_something(sec):
+    """
+    def do_something(sec): # Normally, this function would work but because this function is inside of another function ("func10"), the "target=" can't seem to find it
         print(f"Sleeping {sec} second...")
         time.sleep(sec)
         return f"Done Sleeping {sec}"
+    """
     
     if __name__ == '__main__':
         with concurrent.futures.ProcessPoolExecutor() as executor: # context manager
@@ -406,162 +458,152 @@ def func10():
         print(f"Finished in {round(finish - start, 2)} second(s)")
 
 
+def func11():
+    """
+    Now, even if we don't grab our results within the context manager (the 'with concurrent.futures.ProcessPoolExecutor() as executor'), it's still going to automatically
+    join all of the processes and let them finish after the context manager ends. 
 
 
 
+    1. print(f"Finished in {round(finish - start, 2)} second(s)")
+    You can see that the processes didn't move on after assigning the processes and execute (and print) the 'finish' variable before the processes were finished. 
+    The context manager still waited for the results to be returned from the processes even without grabbing the results and printing it out. In other words, the 
+    context managers are still going to continue and automatically 'join' the processes.
+    """
+    import concurrent.futures
+    import time
+    
+    start = time.perf_counter()
+    
+    """
+    def do_something(secs): # Normally, this function would work but because this function is inside of another function ("func11"), the "target=" can't seem to find it
+        print(f"Sleeping {secs} second...")
+        time.sleep(secs)
+        return f"Done Sleeping {secs}"
+    """
+    
+    if __name__ == '__main__':
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            seconds = [5, 4, 3, 2, 1]
+            results = executor.map(do_something, seconds)
+    
+    # We are going to remove the code that prints out the results
+    #         for result in results:
+    #             print(result)
+    
+        finish = time.perf_counter()
+        print(f"Finished in {round(finish - start, 2)} second(s)") # footnote 1
 
 
-"""
-Now, even if we don't grab our results within the context manager (the 'with concurrent.futures.ProcessPoolExecutor() as executor'), it's still going to automatically
-join all of the processes and let them finish after the context manager ends. 
+def func12():
+    """
+    Real world examples of multiprocess code
 
+    A photo editing code without using multiprocessing (each photo is downloaded one by one/synchronously)
+    """
+    import time
+    from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy (Make sure you download it using "pip instlal Pillow" (if you have pip) before trying to use it)
+    import os
 
-
-1. print(f"Finished in {round(finish - start, 2)} second(s)")
-You can see that the processes didn't move on after assigning the processes and execute (and print) the 'finish' variable before the processes were finished. 
-The context manager still waited for the results to be returned from the processes even without grabbing the results and printing it out. In other words, the 
-context managers are still going to continue and automatically 'join' the processes.
-"""
-# import concurrent.futures
-# import time
-#
-# start = time.perf_counter()
-#
-#
-# def do_something(secs):
-
-#     print(f"Sleeping {secs} second...")
-#     time.sleep(secs)
-#     return f"Done Sleeping {secs}"
-#
-# if __name__ == '__main__':
-#     with concurrent.futures.ProcessPoolExecutor() as executor:
-#         seconds = [5, 4, 3, 2, 1]
-#         results = executor.map(do_something, seconds)
-#
-# # We are going to remove the code that prints out the results
-# #         for result in results:
-# #             print(result)
-#
-#     finish = time.perf_counter()
-#     print(f"Finished in {round(finish - start, 2)} second(s)") # footnote 1
-
-
-
-
-
-
-
-
-
-"""
-Real world examples of multiprocess code
-"""
-
-
-
-"""
-A photo editing code without using multiprocessing (each photo is downloaded one by one/synchronously)
-"""
-# import time
-# from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
-# img_names = [ # The photos that were downloaded from the 'threading' Python code
-#     'photo-1516117172878-fd2c41f4a759.jpg',
-#     'photo-1532009324734-20a7a5813719.jpg',
-#     'photo-1524429656589-6633a470097c.jpg',
-#     'photo-1530224264768-7ff8c1789d79.jpg',
-#     'photo-1564135624576-c5c88640f235.jpg',
-#     'photo-1541698444083-023c97d3f4b6.jpg',
-#     'photo-1524758631624-e2822e304c36.jpg',
-#     'photo-1513938709626-033611b8cc03.jpg',
-#     'photo-1507143550189-fed454f93097.jpg',
-#     'photo-1493976040374-85c8e12f0c0e.jpg',
-#     'photo-1504198453319-5ce911bafcde.jpg',
-#     'photo-1530122037265-a5f1f91d3b99.jpg',
-#     'photo-1628338128143-1b9e187b1441.jpg',
-#     'photo-1550439062-609e1531270e.jpg',
-#     'photo-1593642634367-d91a135587b5.jpg'
-# ]
-#
-# t1 = time.perf_counter()
-#
-# size = (1200, 1200)
-#
-# for img_name in img_names:
-#     img = Image.open(img_name)
-#
-#     img = img.filter(ImageFilter.GaussianBlur(15)) # This might be more of an IO Bound thing rather than a CPU Bound task but the example still works as it is...
-#
-#     img.thumbnail(size)
-#     img.save(f'processed/{img_name}') # we are saving the photo into folder named 'processed' but you need to create it first
-#     print(f'{img_name} was processed...')
-#
-# t2 = time.perf_counter()
-#
-# print(f'Finished in {t2-t1} seconds')
-
-
-"""
-Multiple processes example
-(This example is a good candidate for the 'ProcessPoolExecutor' 'map' method)
-
-In order to make the code above a multiprocess code, we would have to create a function that will process a single image (and then we can have our 'map' function).
-
-
-
-
-1. executor.map(process_image, img_names)
-We are going to take in the name of the function and every element in a list of things that we want to execute "executor.map(<function name>, <iterable_name>)"
-
-
-
-
-If we check the task manager/activity monitor, we are able to see that there are multiple Python processes running (a Python process for each core/process created). 
-When the Python program finishes, then we are able to see that the Python processes disappear as they are no longer in use (and therefore removed)
-"""
-import concurrent.futures
-import time
-from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
-img_names = [ # The photos that were downloaded from the 'threading' Python code
-    'photo-1516117172878-fd2c41f4a759.jpg',
-    'photo-1532009324734-20a7a5813719.jpg',
-    'photo-1524429656589-6633a470097c.jpg',
-    'photo-1530224264768-7ff8c1789d79.jpg',
-    'photo-1564135624576-c5c88640f235.jpg',
-    'photo-1541698444083-023c97d3f4b6.jpg',
-    'photo-1524758631624-e2822e304c36.jpg',
-    'photo-1513938709626-033611b8cc03.jpg',
-    'photo-1507143550189-fed454f93097.jpg',
-    'photo-1493976040374-85c8e12f0c0e.jpg',
-    'photo-1504198453319-5ce911bafcde.jpg',
-    'photo-1530122037265-a5f1f91d3b99.jpg',
-    'photo-1628338128143-1b9e187b1441.jpg',
-    'photo-1550439062-609e1531270e.jpg',
-    'photo-1593642634367-d91a135587b5.jpg'
-]
-
-t1 = time.perf_counter()
-size = (1200, 1200)
-
-def process_image(img_name):  # This is going to take in the image name (represented by the variable 'img_name' as the argument)
-    img = Image.open(img_name)
-
-    img = img.filter(ImageFilter.GaussianBlur(15))  # This might be more of an IO Bound thing rather than a CPU Bound task but the example still works as it is...
-
-    img.thumbnail(size)
-    img.save(f'processed/{img_name}')  # we are saving the photo into folder named 'processed' but you need to create it first
-    print(f'{img_name} was processed...')
-
-
-if __name__ == '__main__':
-    with concurrent.futures.ProcessPoolExecutor() as executor:
-        executor.map(process_image, img_names) # footnote 1
-
+    os.chdir("photos")
+    img_names = [ # The photos that were downloaded from the 'threading' Python code
+        'photo-1516117172878-fd2c41f4a759.jpg',
+        'photo-1532009324734-20a7a5813719.jpg',
+        'photo-1524429656589-6633a470097c.jpg',
+        'photo-1530224264768-7ff8c1789d79.jpg',
+        'photo-1564135624576-c5c88640f235.jpg',
+        'photo-1541698444083-023c97d3f4b6.jpg',
+        'photo-1524758631624-e2822e304c36.jpg',
+        'photo-1513938709626-033611b8cc03.jpg',
+        'photo-1507143550189-fed454f93097.jpg',
+        'photo-1493976040374-85c8e12f0c0e.jpg',
+        'photo-1504198453319-5ce911bafcde.jpg',
+        'photo-1530122037265-a5f1f91d3b99.jpg',
+        'photo-1628338128143-1b9e187b1441.jpg',
+        'photo-1550439062-609e1531270e.jpg',
+        'photo-1593642634367-d91a135587b5.jpg'
+    ]
+    
+    t1 = time.perf_counter()
+    
+    size = (1200, 1200)
+    
+    for img_name in img_names:
+        img = Image.open(img_name)
+        
+        img = img.filter(ImageFilter.GaussianBlur(15)) # This might be more of an IO Bound thing rather than a CPU Bound task but the example still works as it is...
+    
+        img.thumbnail(size)
+        img.save(f'processed_images/{img_name}') # we are saving the photo into folder named 'processed' but you need to create it first
+        print(f'{img_name} was processed...')
+    
     t2 = time.perf_counter()
+    
     print(f'Finished in {t2-t1} seconds')
 
 
-"""
-The simple thing about threads and multiprocesses using the concurrent.futures library is that it is easily to switch between the two (all you have to do is to change 
-'ProcessPoolExecutor()' to 'ThreadPoolExecutor()' and vice versa.
-"""
+def func13():
+    """
+    Multiple processes example
+    (This example is a good candidate for the 'ProcessPoolExecutor' 'map' method)
+
+    In order to make the code above a multiprocess code, we would have to create a function that will process a single image (and then we can have our 'map' function).
+
+
+    1. executor.map(process_image, img_names)
+    We are going to take in the name of the function and every element in a list of things that we want to execute "executor.map(<function name>, <iterable_name>)"
+
+
+    If we check the task manager/activity monitor, we are able to see that there are multiple Python processes running (a Python process for each core/process created). 
+    When the Python program finishes, then we are able to see that the Python processes disappear as they are no longer in use (and therefore removed)
+    """
+    import concurrent.futures
+    import time
+    # from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
+
+    img_names = [ # The photos that were downloaded from the 'threading' Python code
+        'photo-1516117172878-fd2c41f4a759.jpg',
+        'photo-1532009324734-20a7a5813719.jpg',
+        'photo-1524429656589-6633a470097c.jpg',
+        'photo-1530224264768-7ff8c1789d79.jpg',
+        'photo-1564135624576-c5c88640f235.jpg',
+        'photo-1541698444083-023c97d3f4b6.jpg',
+        'photo-1524758631624-e2822e304c36.jpg',
+        'photo-1513938709626-033611b8cc03.jpg',
+        'photo-1507143550189-fed454f93097.jpg',
+        'photo-1493976040374-85c8e12f0c0e.jpg',
+        'photo-1504198453319-5ce911bafcde.jpg',
+        'photo-1530122037265-a5f1f91d3b99.jpg',
+        'photo-1628338128143-1b9e187b1441.jpg',
+        'photo-1550439062-609e1531270e.jpg',
+        'photo-1593642634367-d91a135587b5.jpg'
+    ]
+
+    t1 = time.perf_counter()
+    size = (1200, 1200)
+
+    def process_image(img_name):  # This is going to take in the image name (represented by the variable 'img_name' as the argument)
+        img = Image.open(img_name)
+
+        img = img.filter(ImageFilter.GaussianBlur(15))  # This might be more of an IO Bound thing rather than a CPU Bound task but the example still works as it is...
+
+        img.thumbnail(size)
+        img.save(f'processed/{img_name}')  # we are saving the photo into folder named 'processed' but you need to create it first
+        print(f'{img_name} was processed...')
+
+
+    if __name__ == '__main__':
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            executor.map(process_image, img_names) # footnote 1
+
+        t2 = time.perf_counter()
+        print(f'Finished in {t2-t1} seconds')
+
+
+    """
+    The simple thing about threads and multiprocesses using the concurrent.futures library is that it is easily to switch between the two (all you have to do is to change 
+    'ProcessPoolExecutor()' to 'ThreadPoolExecutor()' and vice versa.
+    """
+
+
+func12()
