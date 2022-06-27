@@ -530,7 +530,7 @@ def func12():
     
     for img_name in img_names:
         img = Image.open(img_name)
-        
+
         img = img.filter(ImageFilter.GaussianBlur(15)) # This might be more of an IO Bound thing rather than a CPU Bound task but the example still works as it is...
     
         img.thumbnail(size)
@@ -559,7 +559,7 @@ def func13():
     """
     import concurrent.futures
     import time
-    # from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
+    from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
 
     img_names = [ # The photos that were downloaded from the 'threading' Python code
         'photo-1516117172878-fd2c41f4a759.jpg',
