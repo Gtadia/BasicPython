@@ -559,8 +559,10 @@ def func13():
     """
     import concurrent.futures
     import time
+    import os
     from PIL import Image, ImageFilter  # PIL is the pillow library and it's an image library for Python that makes images processing easy
 
+    os.chdir("photos")
     img_names = [ # The photos that were downloaded from the 'threading' Python code
         'photo-1516117172878-fd2c41f4a759.jpg',
         'photo-1532009324734-20a7a5813719.jpg',
@@ -606,4 +608,4 @@ def func13():
     """
 
 
-func12()
+func13()
