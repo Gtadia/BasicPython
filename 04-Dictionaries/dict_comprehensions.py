@@ -54,6 +54,8 @@ def func1_4():
     We can have if statements at the end like LIST comprehensions
         (if the if statement is TRUE, it will be appended)
         (if FALSE, it will be omitted)
+    
+    * REMEMBER: YOU CAN HAVE ELSE STATEMENTS AS WELL
 
     EX:
     Not appending "Spoon" to our dictionary
