@@ -16,6 +16,8 @@ When you log something, you can choose between 5 standard logging levels
 Basic Logging for small applications is okay but once your applications starts getting bigger and more complicated (especially
 when we start importin our other modules), some issues can start to arise (This is because all of these modules will all try to
 share the same logger).
+
+
 """
 
 def func1():
