@@ -7,6 +7,15 @@ JSON = JavaScript Object Notation       # Was inspired by JavaScript but is now 
     - Very common data format for storing some information.
     - Commonly used when fetching data from online APIs.
     - Also used for configuration files and different kinds of data that can be saved on your local machine.
+
+
+You can convert JSON data back into Python and this process is called "deserialization" or "decoding"
+    - loads() means that you're loading json data into python data as a string
+    - load() means that you're loading json data into python data as a file/not as a string
+
+We can also dump the JSON file (which has been converted from the Python dictionary) into a file
+    - dumps() means that you're dumping Python data into json data as a string
+    - dump() means that you're dumping Python data into json data as a file/not a string
 """
 
 def func1():
@@ -284,6 +293,124 @@ def func9():
     data = json.loads(source)
     print(json.dumps(data, indent=2)) # Since just straight up returning the JSON file returns a string in a single line with /n, loading and then dumping it will help to clear the JSON
     # Example output: b'{\n   "date": "06-28-2022",\n   "milliseconds_since_epoch": 1656429745740,\n   "time": "03:22:25 PM"\n}\n'
+
+
+def func10():
+    """
+    We can encode an object into a JSON file
+    """
+    import json 
+
+    class User:
+        def __init__(self, name, age):
+            self.userName = name
+            self.userAge = age
+
+    user = User("Max", 27)
+    # userJSON = json.dumps(user) # Using this on its own will not work so we need to create our own encoding function.
+    def encode_user(obj):
+        """
+        If the object, which we are going to pass in the variable user (an object), is an instance variable of the class User. We are going to
+        return a dictionary with the name and age that contains the object "user"'s name (userName) and age (userAge) respectively.
+
+        If the object "user" is not an instance of the class User, we are going to throw in a TypeError with the same error message that it gives us when we try to run "json.dumps()"
+        without this custom encoding function.
+        """
+        if isinstance(obj, User):  # isinstance will check whether an object is an instance of a class (An instance of a class is... a member of a given class that has specified values rather than variables)
+            return {'name': obj.userName, 'age': obj.userAge, obj.__class__.__name__: "hi"} # obj.__class__.__name__ is there just to return the class name so you can literally put anything in for the value part of the dictionary.
+        else:
+            raise TypeError("Object of type User is not JSON serializable")
+
+    userJSON = json.dumps(user, default=encode_user) # We are passing in the object "user" and using "default=" to make "json.dumps" run using our custom encoding function.
+    print(userJSON)
+
+
+def func11():
+    """
+    Using the custom JSON encoder class, we can just encode the json file directly by calling the class and ".encode" (and specifying what we want to encode)
+    """
+    import json
+    from json import JSONEncoder
+
+    class User:
+        def __init__(self, name, age):
+            self.userName = name
+            self.userAge = age
+
+    user = User("Max", 27)
+
+    class myUserEncoder(JSONEncoder): # This class is the same as the class that was used in the code above
+        def default(self, obj):
+            if isinstance(obj, User):
+                return {"name": obj.userName, "age": obj.userAge, obj.__class__.__name__: "MIT"}
+            else:
+                return JSONEncoder.default(self, obj)
+
+    userJSON = myUserEncoder().encode(user)
+    print(userJSON)
+
+
+def func12():
+    """
+    Using the custom JSON encoder class, we can just encode the json file directly by calling the class and ".encode" (and specifying what we want to encode)
+    """
+    import json
+    from json import JSONEncoder
+
+    class User:
+        def __init__(self, name, age):
+            self.userName = name
+            self.userAge = age
+
+    user = User("Max", 27)
+    
+    class myUserEncoder(JSONEncoder): # This class is the same as the class that was used in func11
+        def default(self, obj):
+            if isinstance(obj, User):
+                return {"name": obj.userName, "age": obj.userAge, obj.__class__.__name__: "MIT"}
+            else:
+                return JSONEncoder.default(self, obj)
+
+    userJSON = myUserEncoder().encode(user) # encoding directly using the ".encode" function
+    print(userJSON)
+
+
+def func13():
+    """
+    When you create custom objects, you can also decode them
+
+    In other words, we can undo what was done in func10 through func12
+    """
+    # FUNC 12
+    import json
+    from json import JSONEncoder
+
+    class User:
+        def __init__(self, name, age):
+            self.userName = name
+            self.userAge = age
+
+    user = User("Max", 27)
+    
+    class myUserEncoder(JSONEncoder): # This class is the same as the class that was used in func11
+        def default(self, obj):
+            if isinstance(obj, User):
+                return {"name": obj.userName, "age": obj.userAge, obj.__class__.__name__: "MIT"}
+            else:
+                return JSONEncoder.default(self, obj)
+
+    userJSON = myUserEncoder().encode(user) # encoding directly using the ".encode" function
+    print(userJSON)
+    # FUNC 12
+
+    def decode_user(myDictionary):
+        if User.__name__ in myDictionary:
+            return User(name=myDictionary["name"], age=myDictionary['age'])
+        return myDictionary
+
+    user = json.loads(userJSON, object_hook=decode_user) # we're using the userJSON variable from func 12
+    print(type(user))
+    print(user.__name__())    
 
 
 
