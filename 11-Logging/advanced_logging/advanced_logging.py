@@ -298,6 +298,7 @@ def func6():
     # Stream Handler
     stream_handler = logging.StreamHandler() # We don't need to input anything into the parentheses (Since there can logically only be one console)
     stream_handler.setFormatter(logging.Formatter("%(name)s:%(levelname)s:%(message)s")) # The stream handler (and any additional file handlers) needs their format to be set
+    stream_handler.setLevel(logging.INFO) # You can set the logging level on a stream handler
     my_new_non_root_logger.addHandler(stream_handler) # The stream handler has been added to our logger for this module.
 
     # Second File Handler that logs any log messages with the level INFO or higher
@@ -338,6 +339,27 @@ def func6():
     my_new_non_root_logger.error("This message should be caught by the file_handler, which is handling 'advanced_log_file.log'")
 
 
+def func7():
+    """
+    You can get the name of the logger that the code that you're running is using (EX: __main__, advanced_logging, etc.) by using
+        "logging.getLogger(__name__)"
+
+    REMEMBER: It won't say that you're using "root" but rather just the module that the logger is being run from.
+    
+    It also gives us the default logging level that it's set to 
+    """
+    import logging
+
+    logging.basicConfig()
+
+    print(logging.getLogger(__name__)) # This should return <Logger  __main__ (warning)>
+
+
+def func8():
+    """
+    """
+
+
 
 # type the name of the function that you want to run here
-func6()
+func8()
