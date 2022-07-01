@@ -110,5 +110,103 @@ def func15():
         print(rand_keys, "\t", rand_values)
 
 
+"""
+A dictionary is a data collection type that is unordered and mutable.
+It consists of a collection key value pairs (Like the word and the definition in a dictionary)
+The keys (keywords) cannot have duplicates.
+The values (definition) can have duplicates.
+"""
+
+def func16():
+    # When using dict() instead of {}, you don't have to put quotes around the keywords
+    mydict2 = dict(name="Mary", age=27, city="Boston")
+    print(mydict2)
+
+    value = mydict2["city"]
+    print(value)
+
+
+def func17():
+    # We can add a new key, value pair to a dictionary
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict["email"] = "max@zyx.com"
+    print(mydict)
+
+
+def func18():
+    # If we create a new key value pair but the key already exists, the previous key value pair will be overwritten
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict["name"] = "Min"
+    print(mydict)
+
+
+def func19():
+    # We can remove/pop the last item in a dictionary with the .popitem() method
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict.popitem()
+    print(mydict)
+
+
+def func20():
+    # We can check if a key is in the dictionary with an "if, in" statement or with the "try, except" statement
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    if "city" in mydict: # The if, in statement in python
+        print(mydict["city"])
+
+
+def func21():
+    # We can loop through all the dictionary keys
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    for i in mydict:
+        print(i)
+
+
+def func22():
+    # If you want to make a copy of the dictionary, you can just make another variable equal to the dictionary but any changes you make to the copy will change the original as well (so it's not really a copy)
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict_copy = mydict
+    print(mydict_copy)
+    mydict_copy["school"] = "MIT"
+    print(mydict_copy)
+    print(mydict) # You can see that both the "copy" and the original are modified
+
+    # How to make a TRUE copy of a dictionary that is independent from the original dictionary by using .copy()
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict_copy = mydict.copy()
+    mydict_copy["school"] = "MIT"
+    print(mydict)
+    print(mydict_copy) # You can see that the copy changed but the original copy didn't
+
+
+def func23():
+    # You can also make a TRUE copy of a dictionary that is independent from the original dictionary by using dict()
+    mydict = {"name": "Max", "age": 28, "city": "New York"}
+    mydict_copy = dict(mydict)
+    mydict_copy["schools"] = "MIT"
+    print(mydict)
+    print(mydict_copy)
+
+
+def func23():
+    # You can use any immutable types of data as a key in dictionaries
+    # For example, you can use numbers or even tuples (the tuples work if it contains only immutable elements)
+    my_dict = {3: 9, 6: 36, 8: 84, 9: 81}
+    print(my_dict)
+    value = my_dict[3] # We are finding for the key "3"
+    print(value)
+
+    # Using tuples as a key
+    mytuple = (8, 7)
+    mydict = {mytuple: 15}
+    print(mydict)
+
+
+def func24():
+    # You cannot use a list as a key in a dictionary
+    mylist = [8, 7]
+    mydict = {mylist: 15}  # This will throw an error
+
+
+
 # type the name of the function that you want to run here
 func15()
